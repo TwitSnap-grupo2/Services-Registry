@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./src:/app/src
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      POSTGRES_URL: ${POSTGRES_URL}
+      PORT: ${PORT}
+    command: npm run dev
+
+  production:
+    build:
+      context: .
+      target: production
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      POSTGRES_URL: ${POSTGRES_URL}
+      PORT: ${PORT}
+    command: npm run start
+
+  test:
+    build:
+      context: .
+      target: build
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      TEST_POSTGRES_URL: ${TEST_POSTGRES_URL}
+      PORT: ${PORT}
+    command: npm run test
