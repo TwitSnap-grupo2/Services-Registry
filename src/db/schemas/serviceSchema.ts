@@ -15,5 +15,5 @@ export const serviceTable = pgTable("services", {
   apiKey: text(),
 });
 
-export type SelectRegister = typeof serviceTable.$inferSelect;
-export type InsertRegister = typeof serviceTable.$inferInsert;
+export type SelectService = typeof serviceTable.$inferSelect;
+export type InsertService = typeof serviceTable.$inferInsert;
