@@ -9,9 +9,9 @@ import {
 
 export const serviceTable = pgTable("services", {
   id: uuid("id").defaultRandom().primaryKey(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  name: text().notNull(),
   description: text(),
-  state: boolean().default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   apiKey: text(),
 });
 

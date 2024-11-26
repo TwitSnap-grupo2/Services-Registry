@@ -1,5 +1,5 @@
 {
-  "id": "d1376da4-c110-43e4-bba9-85030657ea37",
+  "id": "57e88abe-53a2-47e8-b736-b2d437e5d537",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -15,12 +15,11 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
+        "name": {
+          "name": "name",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": true
         },
         "description": {
           "name": "description",
@@ -28,12 +27,12 @@
           "primaryKey": false,
           "notNull": false
         },
-        "state": {
-          "name": "state",
-          "type": "boolean",
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
-          "default": true
+          "default": "now()"
         },
         "apiKey": {
           "name": "apiKey",
