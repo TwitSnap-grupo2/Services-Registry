@@ -11,8 +11,9 @@ export const serviceTable = pgTable("services", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: text().notNull(),
   description: text(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  createdAt: timestamp().defaultNow().notNull(),
   apiKey: text(),
+  validUntil: timestamp().notNull(),
 });
 
 export type SelectService = typeof serviceTable.$inferSelect;

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import { routes } from "./controllers";
-// import swaggerOutput from "./swagger_output.json";
+import swaggerOutput from "./swagger_output.json";
 import { errorMiddleware, unknownEndpoint } from "./utils/middleware";
 
 dotenv.config();
@@ -21,5 +21,5 @@ app.use("/", routes);
 app.use(errorMiddleware);
 app.use(unknownEndpoint);
 
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerOutput));
 export default app;

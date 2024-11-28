@@ -1,4 +1,5 @@
 import db from "../db/repositories/registry";
+import getExpiration from "../utils/expiration";
 import { NewService } from "../utils/types";
 
 const getAllServices = async () => {
@@ -6,7 +7,43 @@ const getAllServices = async () => {
 };
 
 const createNewService = async (newService: NewService) => {
-  return await db.createNewService(newService);
+  const service = await db.createNewService(newService, getExpiration());
+
+  if (service.length === 0) return null;
+
+  return service[0];
 };
 
-export default { getAllServices, createNewService };
+const blockService = async (serviceId: string) => {
+  const service = await db.invalidateApiKey(serviceId);
+  if (service.length === 0) {
+    return null;
+  }
+  return service[0];
+};
+
+const createServiceApiKey = async (serviceId: string) => {
+  const service = await db.createApiKey(serviceId, getExpiration());
+  if (service.length === 0) {
+    return null;
+  }
+  return service[0];
+};
+
+const isValidApiKey = async (apiKey: string): Promise<boolean> => {
+  const service = await db.getServiceByApiKey(apiKey);
+
+  if (service.length == 0) return false;
+
+  if (service[0].validUntil < new Date()) return false;
+
+  return true;
+};
+
+export default {
+  getAllServices,
+  createNewService,
+  blockService,
+  createServiceApiKey,
+  isValidApiKey,
+};
