@@ -6,6 +6,12 @@ const getAllServices = async () => {
   return await db.getAllServices();
 };
 
+const getServiceById = async (serviceId: string) => {
+  const service = await db.getServiceById(serviceId);
+  if (service.length == 0) return null;
+  return service[0];
+};
+
 const createNewService = async (newService: NewService) => {
   const service = await db.createNewService(newService, getExpiration());
 
@@ -42,6 +48,7 @@ const isValidApiKey = async (apiKey: string): Promise<boolean> => {
 
 export default {
   getAllServices,
+  getServiceById,
   createNewService,
   blockService,
   createServiceApiKey,

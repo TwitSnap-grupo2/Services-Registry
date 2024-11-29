@@ -5,6 +5,7 @@ import servicesRepository from "../db/repositories/registry";
 import { testService, createNewService } from "./testHelper";
 import { InsertService } from "../db/schemas/serviceSchema";
 import { Service } from "../utils/types";
+import { randomUUID } from "crypto";
 
 const api = supertest(app);
 
@@ -35,6 +36,23 @@ describe("services", () => {
     const res = await api.get("/api/registry").expect(200);
 
     expect(res.body).toHaveLength(0);
+  });
+
+  test("return not found if the id does not exist", async () => {
+    await api.get(`/api/registry/${randomUUID()}`).expect(404);
+  });
+
+  test("return the service if it is registered", async () => {
+    const service = await createNewService();
+
+    const res = await api.get(`/api/registry/${service.id}`).expect(200);
+    const data = res.body;
+
+    expect(service.id).toBe(data.id);
+    expect(service.name).toBe(data.name);
+    expect(service.createdAt.toISOString()).toBe(data.createdAt);
+    expect(service.description).toBe(data.description);
+    expect(service.validUntil.toISOString()).toBe(data.validUntil);
   });
 
   describe("when registered", () => {

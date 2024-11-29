@@ -8,6 +8,15 @@ const getAllServices = async (): Promise<Array<SelectService>> => {
   return db.select().from(serviceTable);
 };
 
+const getServiceById = async (
+  serviceId: string
+): Promise<Array<SelectService>> => {
+  return await db
+    .select()
+    .from(serviceTable)
+    .where(eq(serviceTable.id, serviceId));
+};
+
 const createNewService = async (newService: NewService, validUntil: Date) => {
   return db
     .insert(serviceTable)
@@ -53,6 +62,7 @@ const deleteAllServices = async () => {
 
 export default {
   getAllServices,
+  getServiceById,
   createNewService,
   deleteAllServices,
   invalidateApiKey,
